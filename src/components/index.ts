@@ -27,3 +27,4 @@ export * from './Image';
 export * from './TagBar';
 export * from './Link';
 export * from './Modal';
+export * from './AutoSizer';

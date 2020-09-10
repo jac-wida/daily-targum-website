@@ -253,7 +253,8 @@ export function CardStackedResponsive({
   author,
   onClick,
   altText,
-  Overlay
+  Overlay,
+  style
 }: CardBaseResponsiveProps) {
   return (
     <Clickable 
@@ -261,6 +262,7 @@ export function CardStackedResponsive({
       as={as}
       onClick={onClick}
       className={styles.stackedCardResponsive}
+      style={style}
     >
       <>
         {/* Desktop */}

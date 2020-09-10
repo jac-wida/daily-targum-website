@@ -31,4 +31,23 @@ export function Section({
   );
 }
 
+Section.approximateInnerWidth = approximateInnerWidth;
+function approximateInnerWidth() {
+  if (typeof window === 'undefined') {
+    return 1000;
+  }
+
+  const windowInnerWidth = window.innerWidth;
+  const largeWidth = 1000 + (windowInnerWidth * 0.22);
+
+  if (largeWidth > windowInnerWidth) {
+    return windowInnerWidth;
+  } else {
+    return largeWidth;
+  }
+}
+
+// width: 100%;
+// max-width: calc(1000px + 22vw);
+
 export default Section;

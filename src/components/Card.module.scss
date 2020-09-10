@@ -15,7 +15,6 @@
 .cardBodyBase {
   @include styleHelpers.flex('column');
   @include styleHelpers.cardBody();
-  flex: 1;
   align-items: flex-start;
   overflow: hidden;
 }
