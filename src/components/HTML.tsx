@@ -99,6 +99,8 @@ export function HTML({
   html: string;
   ads?: boolean
 }) {
+  html = html.replace(/((\n|\r|<br>)\s*){2,}/g, `<br>`);
+
   const clean = xss(html, {
     whiteList: {
       ...xssDefault.whiteList,
@@ -115,9 +117,20 @@ export function HTML({
   , options);
 
   return (
-    <div>
-      {computedHtml}
-    </div>
+    <>
+      <div>
+        {computedHtml}
+      </div>
+      <style jsx>
+        {`
+          div :global(br) {
+            display: block;
+            content: "";
+            height: 1rem;
+          }
+        `}
+      </style>
+    </>
   );
 }
 
