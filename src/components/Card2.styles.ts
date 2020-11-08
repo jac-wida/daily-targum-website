@@ -20,8 +20,13 @@ const stackedCard = css.resolve`
 const stackedCardBody = css.resolve`
   * {
     flex: 1;
-    padding: ${styleHelpers.spacing(2.5, 2)};
+    padding: ${styleHelpers.spacing(3.5)};
     background-color: ${styleHelpers.color('surface')};
+  }
+`;
+
+const imageCard = css.resolve`
+  * {
   }
 `;
 
@@ -46,7 +51,7 @@ const byline = css.resolve`
     text-overflow: ellipsis;
     width: 100%;
     font-style: italic;
-    font-size: 0.925rem;
+    font-size: 0.85rem;
   }
 `;
 
@@ -58,13 +63,42 @@ const tag = css.resolve`
   }
 `;
 
+const title = css.resolve`
+  * {
+    font-weight: 800;
+  }
+`;
+
+const row = css.resolve`
+  * {
+    ${styleHelpers.flex('row')};
+  }
+`;
+
+const titleWrap = css.resolve`
+  * {
+    padding: ${styleHelpers.spacing(3.5)};
+    background-color: ${styleHelpers.color('primary_main')};
+    margin-top: -7.5%;
+    position: relative;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+`;
+
 
 export default buildStyleSheet({
   clickable,
   stackedCard,
   stackedCardBody,
+  imageCard,
   spacer,
   byline,
   textPadding,
-  tag
+  tag,
+  title,
+  row,
+  titleWrap
 });

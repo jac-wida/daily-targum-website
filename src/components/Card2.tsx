@@ -6,6 +6,7 @@ import { AspectRatioImage } from './AspectRatioView';
 import { ImageData } from './Image';
 import { ReactChildren, ReactChild } from '../types';
 import cn from 'classnames';
+import { theme } from '../constants';
 import Styles from './Card2.styles';
 const { classNames, StyleSheet } = Styles;
 
@@ -132,7 +133,10 @@ function CardStacked({
 
           {title ? (
             <Text.Truncate 
-              className={classNames.textPadding}
+              className={cn(
+                classNames.title,
+                classNames.textPadding
+              )}
               variant='h3' 
               htmlTag='h2' 
               numberOfLines={2}
@@ -181,6 +185,116 @@ function CardStacked({
   );
 }
 
+function CardImage({
+  title,
+  imageData,
+  href,
+  as,
+  aspectRatio,
+  date,
+  author,
+  onClick,
+  altText,
+  tag,
+  description
+}: CardBaseProps) {
+  return (
+    <Clickable 
+      href={href}
+      as={as}
+      onClick={onClick}
+      style={{
+        ...(aspectRatio ? null : {
+          flex: 1,
+          height: '100%'
+        })
+      }}
+      className={classNames.imageCard}
+    >
+      <AspectRatioImage
+        aspectRatio={aspectRatio ?? 16/9}
+        data={imageData}
+        altText={altText}
+      />
+
+      <div className={classNames.row}>
+        <div
+          style={{
+            width: `calc(${100 * 2/3}% - ${theme.spacing(0.5)}px + 1px)`,
+            position: 'relative'
+          }}
+        >
+          <div 
+            className={cn(
+              'force-dark-mode',
+              classNames.titleWrap
+            )}
+          >
+            {tag ? (
+              <Text 
+                className={cn(
+                  classNames.tag,
+                  classNames.textPadding
+                )}
+              >
+                {tag}
+              </Text>
+            ) : null}
+            
+            {title ? (
+              <Text.Truncate 
+                className={cn(
+                  classNames.title,
+                  classNames.textPadding
+                )}
+                variant='h3' 
+                htmlTag='h2' 
+                numberOfLines={2}
+                noPadding
+              >
+                {title}
+              </Text.Truncate>
+            ) : null}
+
+            {description ? (
+              <Text.Truncate 
+                variant='p' 
+                numberOfLines={2}
+                noPadding
+              >
+                {description}
+              </Text.Truncate>
+            ) : null}
+          </div>
+        </div>
+
+        <div className={classNames.stackedCardBody}>
+          {author ? (
+            <Text 
+              className={cn(
+                classNames.byline,
+                classNames.textPadding
+              )}
+            >
+              {author}
+            </Text>
+          ) : null}
+
+          {date ? (
+            <Text 
+              className={cn(
+                classNames.byline
+              )}
+            >
+              {date}
+            </Text>
+          ) : null}
+        </div>
+      </div>
+    </Clickable>
+  );
+}
+
 function CardSpacer() {
   return (
     <div className={classNames.spacer}/>
@@ -193,6 +307,7 @@ const comparisonFn = function(prevProps: any, nextProps: any) {
 
 export const Card2 = {
   Stacked: React.memo(CardStacked, comparisonFn),
+  Image: React.memo(CardImage, comparisonFn),
   Spacer: React.memo(CardSpacer, comparisonFn)
 }
 

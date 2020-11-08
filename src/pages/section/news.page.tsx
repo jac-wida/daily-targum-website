@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { actions, GetArticles } from '../../shared/src/client';
-import { Section, Grid, LoadMoreButton, ActivityIndicator, Card, CardCols, Banner, SEOProps, Ad, Semantic } from '../../components';
+import { Section, Grid, LoadMoreButton, ActivityIndicator, Card2, CardCols, Banner, SEOProps, Ad, Semantic } from '../../components';
 import { imgix } from '../../utils';
-import { formatDateAbriviated } from '../../shared/src/utils';
+import { formatDateAbriviated, extractTextFromHTML } from '../../shared/src/utils';
 import { useRouter } from 'next/router';
 import { useArticles } from '../../machines';
 import { theme } from '../../constants';
-import styles from './news.module.scss';
+import Styles from './news.styles';
+const { StyleSheet, classNames } = Styles;
 
 function News({ 
   initialArticles
@@ -25,75 +26,87 @@ function News({
   }
 
   return (
-    <Section className={styles.page}>
-      <Semantic role='main' pritable skipNavContent>
-        <Banner text='News' legacy/>
-
-        <Grid.Row spacing={theme.spacing(2.5)}>
-          
-          <CardCols 
-            items={articles.slice(0,2)}
+    <>
+      <Section className={classNames.page}>
+        <Semantic role='main' pritable skipNavContent>
+          <Grid.Row 
+            spacing={theme.spacing(1)}
           >
-            {article => {
-              if (!article) {
-                return null;
-              }
-
-              return (
-                <Card.ImageResponsive
-                  id={article.id}
-                  title={article.title}
-                  imageData={imgix(article.media[0]?.url ?? '', {
-                    xs: imgix.presets.sm('1:1'),
-                    md: imgix.presets.lg('16:9')
-                  })}
-                  href='/article/[year]/[month]/[slug]'
-                  as={'/'+article.slug}
-                  date={formatDateAbriviated(article.publishDate)}
-                  aspectRatioDesktop={16 / 9}
-                  author={article.authors.map(a => a.displayName).join(', ')}
-                  altText={article.media[0]?.altText ?? article.media[0]?.description ?? undefined}
-                />
-              );
-            }}
-          </CardCols>
-
-          <Grid.Col xs={24}>
-            <Ad type='banner'/>
-          </Grid.Col>
-
-          {articles.slice(2).map(item => (
-            <Grid.Col 
-              key={item.id}
-              xs={24}
-              md={12}
-              lg={8}
-            >
-              <Card.StackedResponsive
-                id={item.id}
-                imageData={imgix(item.media[0]?.url ?? '', {
-                  xs: imgix.presets.sm('1:1'),
-                  md: imgix.presets.md('16:9')
-                })}
-                title={item.title}
-                href='/article/[year]/[month]/[slug]'
-                as={'/'+item.slug}
-                date={formatDateAbriviated(item.publishDate)}
-                aspectRatioDesktop={16 / 9}
-                author={item.authors.map(a => a.displayName).join(', ')}
-                altText={item.media[0]?.altText ?? item.media[0]?.description ?? undefined}
+            <Grid.Col xs={24}>
+              <Banner 
+                text='News'
+                className={classNames.banner}
               />
             </Grid.Col>
-          ))}
-        </Grid.Row>
-      </Semantic>
+            
+            <CardCols 
+              items={articles.slice(0,2)}
+            >
+              {article => {
+                if (!article) {
+                  return null;
+                }
 
-      <LoadMoreButton
-        handleLoad={loadMore}
-        loading={loading}
-      />
-      
-    </Section>
+                return (
+                  <Card2.Image
+                    id={article.id}
+                    title={article.title}
+                    imageData={imgix(article.media[0]?.url ?? '', {
+                      xs: imgix.presets.sm('1:1'),
+                      md: imgix.presets.lg('16:9')
+                    })}
+                    href='/article/[year]/[month]/[slug]'
+                    as={'/'+article.slug}
+                    date={formatDateAbriviated(article.publishDate)}
+                    // aspectRatioDesktop={16 / 9}
+                    author={article.authors.map(a => a.displayName).join(', ')}
+                    altText={article.media[0]?.altText ?? article.media[0]?.description ?? undefined}
+                    description={extractTextFromHTML(article.abstract ?? '')}
+                  />
+                );
+              }}
+            </CardCols>
+
+            <Grid.Col xs={24}>
+              <Ad type='banner'/>
+            </Grid.Col>
+
+            {articles.slice(2).map(item => (
+              <Grid.Col 
+                key={item.id}
+                xs={24}
+                md={12}
+                lg={8}
+                style={{height: '100%'}}
+              >
+                <Card2.Stacked
+                  id={item.id}
+                  imageData={imgix(item.media[0]?.url ?? '', {
+                    xs: imgix.presets.sm('1:1'),
+                    md: imgix.presets.md('16:9')
+                  })}
+                  title={item.title}
+                  href='/article/[year]/[month]/[slug]'
+                  as={'/'+item.slug}
+                  date={formatDateAbriviated(item.publishDate)}
+                  aspectRatio={16 / 9}
+                  author={item.authors.map(a => a.displayName).join(', ')}
+                  altText={item.media[0]?.altText ?? item.media[0]?.description ?? undefined}
+                  description={extractTextFromHTML(item.abstract ?? '')}
+                />
+              </Grid.Col >
+            ))}
+          </Grid.Row>
+        </Semantic>
+
+        <LoadMoreButton
+          handleLoad={loadMore}
+          loading={loading}
+        />
+        
+      </Section>
+      {StyleSheet}
+    </>
   );
 }
 

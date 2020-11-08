@@ -32,7 +32,8 @@ function lightTheme() {
     --colors-primary_contrastTextMuted: rgba(255,255,255,0.8);
     --colors-accent_main: #cc0033;
     --colors-accent_contrastText: #fff;
-    --colors-divider: rgba(0, 0, 0, 0.12);
+    --colors-divider: #dee2e6;
+    --colors-divider_light: rgba(0, 0, 0, 0.06);
 
     --colors-highlight: rgba(0,0,0,0.05);
 
@@ -43,7 +44,7 @@ function lightTheme() {
 
     --colors-navbar: rgba(255,255,255,0.92);
 
-    --colors-background_dark: #f7f7f7;
+    --colors-background_dark: #e9ecef;
     --colors-background_main: #ffffff;
     --colors-background_light: #ffffff;
 
@@ -60,7 +61,7 @@ function darkTheme() {
   return `
     --colors-primary_main: #000000;
     --colors-primary_contrastText: #ffffff;
-    --colors-primary_contrastTextMuted: rgba(255,255,255,0.8);
+    --colors-primary_contrastTextMuted: rgba(255,255,255,0.6);
     --colors-accent_main: #f70737;
     --colors-accent_contrastText: #fff;
     --colors-divider: #333;
@@ -72,15 +73,16 @@ function darkTheme() {
 
     --colors-surface: #222;
 
-    --colors-navbar: rgba(0, 0, 0, 0.973);
+    --colors-navbar: rgba(0, 0, 0, 0.93);
 
+    --colors-background_dark: #000;
     --colors-background_main: #131313;
     --colors-background_light: #111;
 
     --colors-tooltip: #fff;
     --colors-tooltip_contrastText: #000;
 
-    --colors-banner: var(--colors-background_light);
+    --colors-banner: transparent;
 
     color: var(--colors-text);
   `;
