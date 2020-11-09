@@ -6,7 +6,6 @@ import { AspectRatioImage } from './AspectRatioView';
 import { ImageData } from './Image';
 import { ReactChildren, ReactChild } from '../types';
 import cn from 'classnames';
-import { theme } from '../constants';
 import Styles from './Card2.styles';
 const { classNames, StyleSheet } = Styles;
 
@@ -220,16 +219,11 @@ function CardImage({
       <div className={classNames.row}>
         <div
           style={{
-            width: `calc(${100 * 2/3}% - ${theme.spacing(0.5)}px + 1px)`,
+            width: `calc(${100 * 2/3}% + 2px)`,
             position: 'relative'
           }}
         >
-          <div 
-            className={cn(
-              'force-dark-mode',
-              classNames.titleWrap
-            )}
-          >
+          <div className={classNames.titleWrap}>
             {tag ? (
               <Text 
                 className={cn(

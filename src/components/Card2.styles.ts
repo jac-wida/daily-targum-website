@@ -78,13 +78,12 @@ const row = css.resolve`
 const titleWrap = css.resolve`
   * {
     padding: ${styleHelpers.spacing(3.5)};
-    background-color: ${styleHelpers.color('primary_main')};
+    background-color: ${styleHelpers.color('surface')};
     margin-top: -7.5%;
-    position: relative;
     position: absolute;
     left: 0;
     bottom: 0;
-    right: 0;
+    right: 2px;
   }
 `;
 
